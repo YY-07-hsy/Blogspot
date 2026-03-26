@@ -4,6 +4,7 @@
   "description": "Personal blog inspired by craftinginterpreters.com",
   "type": "module",
   "scripts": {
+     "build": "vitepress build docs",
     "docs:dev": "vitepress dev docs --port 5173",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
