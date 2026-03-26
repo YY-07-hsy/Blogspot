@@ -1,0 +1,38 @@
+[
+  {
+    "id": "javascript-closure",
+    "title": "深入理解JavaScript闭包",
+    "section": "技术学习",
+    "category": "JavaScript",
+    "date": "2024年1月15日",
+    "excerpt": "闭包是JavaScript中最强大的概念之一。本文将带你从基础到实践，全面掌握闭包的奥秘。",
+    "content": "# 深入理解JavaScript闭包\n\n闭包是 JavaScript 中最强大但也最容易被误解的概念之一。\n\n## 什么是闭包\n\n闭包是指一个函数能够\"记住\"它创建时的环境。\n\n### 一个简单的例子\n\n```javascript\nfunction outer() {\n  const name = 'JavaScript';\n  function inner() {\n    console.log(name);\n  }\n  return inner;\n}\nconst fn = outer();\nfn(); // 输出: JavaScript\n```\n\n## 总结\n\n理解闭包将帮助你写出更好的 JavaScript 代码。"
+  },
+  {
+    "id": "css-layout",
+    "title": "CSS布局的艺术",
+    "section": "技术学习",
+    "category": "CSS",
+    "date": "2024年1月8日",
+    "excerpt": "从Flexbox到Grid，现代CSS布局技术让网页设计变得更加优雅和强大。",
+    "content": "# CSS布局的艺术\n\n从 Flexbox 到 Grid，现代 CSS 布局技术让网页设计变得更加优雅和强大。\n\n## Flexbox 弹性布局\n\n```css\n.container {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n```\n\n## 总结\n\n掌握 Flexbox 和 Grid，将帮助你构建任何你想象中的布局。"
+  },
+  {
+    "id": "typescript-types",
+    "title": "TypeScript类型系统入门",
+    "section": "技术学习",
+    "category": "TypeScript",
+    "date": "2023年12月28日",
+    "excerpt": "TypeScript的类型系统是其核心优势所在。了解类型推断、泛型和高级类型。",
+    "content": "# TypeScript类型系统入门\n\nTypeScript 的类型系统是其核心优势所在。\n\n## 基础类型\n\n```typescript\nlet name: string = 'Alice';\nlet age: number = 25;\n```\n\n## 总结\n\n掌握这些高级类型技巧，将帮助你写出更健壮的 TypeScript 代码。"
+  },
+  {
+    "id": "responsive-design",
+    "title": "响应式设计的最佳实践",
+    "section": "技术学习",
+    "category": "响应式设计",
+    "date": "2023年12月20日",
+    "excerpt": "在多设备时代，响应式设计已成为前端开发的必备技能。",
+    "content": "# 响应式设计的最佳实践\n\n在多设备时代，响应式设计已成为前端开发的必备技能。\n\n## 响应式设计基础\n\n响应式设计的核心是让网站能够适配不同的屏幕尺寸。\n\n## 总结\n\n掌握这些最佳实践，你就能构建出在各种设备上都能良好体验的网站。"
+  }
+]

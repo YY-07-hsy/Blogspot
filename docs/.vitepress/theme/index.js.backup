@@ -1,0 +1,142 @@
+import DefaultTheme from 'vitepress/theme'
+import { h, onMounted, onUnmounted, ref, nextTick } from 'vue'
+import './custom.css'
+import AdminPanel from './AdminPanel.vue'
+
+/* ========================================
+   文章右侧目录组件
+   ======================================== */
+const ArticleTOC = {
+  name: 'ArticleTOC',
+  setup() {
+    const headings = ref([])
+    const activeId = ref('')
+    const mounted = ref(false)
+
+    const extractHeadings = () => {
+      try {
+        const docHeadings = document.querySelectorAll('.vp-doc h2, .vp-doc h3')
+        const items = []
+
+        docHeadings.forEach((heading, index) => {
+          const text = heading.textContent?.trim() || ''
+          if (!text) return
+
+          const id = heading.id || 'heading-' + index
+          if (!heading.id) {
+            heading.id = id
+          }
+
+          items.push({
+            id,
+            text,
+            level: parseInt(heading.tagName.charAt(1))
+          })
+        })
+
+        headings.value = items
+      } catch (e) {
+        console.error('Error extracting headings:', e)
+      }
+    }
+
+    const updateActiveHeading = () => {
+      try {
+        const docHeadings = document.querySelectorAll('.vp-doc h2, .vp-doc h3')
+        let active = ''
+
+        for (let i = docHeadings.length - 1; i >= 0; i--) {
+          const heading = docHeadings[i]
+          if (!heading) continue
+
+          const rect = heading.getBoundingClientRect()
+          if (rect.top <= 120) {
+            active = heading.id
+            break
+          }
+        }
+
+        activeId.value = active
+      } catch (e) {
+        console.error('Error updating active heading:', e)
+      }
+    }
+
+    const scrollToHeading = (id) => {
+      try {
+        const element = document.getElementById(id)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      } catch (e) {
+        console.error('Error scrolling to heading:', e)
+      }
+    }
+
+    onMounted(() => {
+      mounted.value = true
+      nextTick(() => {
+        setTimeout(() => {
+          extractHeadings()
+          updateActiveHeading()
+        }, 100)
+      })
+      window.addEventListener('scroll', updateActiveHeading, { passive: true })
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', updateActive)
+    })
+
+    return () => {
+      if (!mounted.value || headings.value.length === 0) {
+        return null
+      }
+
+      const renderList = (items, level = 2) => {
+        const filteredItems = items.filter(item => item.level === level)
+        if (filteredItems.length === 0) return null
+
+        return h('ul', { class: 'article-toc-list level-' + level },
+          filteredItems.map(item => {
+            const children = renderList(items, level + 1)
+            const childElements = children ? [children] : []
+
+            return h('li', { class: 'article-toc-item' }, [
+              h('a', {
+                href: '#' + item.id,
+                class: ['article-toc-link', activeId.value === item.id ? 'active' : ''],
+                onClick: (e) => {
+                  e.preventDefault()
+                  scrollToHeading(item.id)
+                }
+              }, [
+                h('span', { class: 'article-toc-text' }, item.text)
+              ]),
+              ...childElements
+            ])
+          })
+        )
+      }
+
+      return h('aside', { class: 'article-toc-container' }, [
+        h('div', { class: 'article-toc-header' }, '目录'),
+        h('nav', { class: 'article-toc-content' }, [
+          renderList(headings.value, 2)
+        ])
+      ])
+    }
+  }
+}
+
+export default {
+  extends: DefaultTheme,
+  Layout: () => {
+    return h(DefaultTheme.Layout, null, {
+      'layout-bottom': () => h(ArticleTOC)
+    })
+  },
+  enhanceApp({ app }) {
+    app.component('AdminPanel', AdminPanel)
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"C:\\\\Users\\\\杨静妍\\\\Blogspot\" && npm init -y)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(ssh-keygen:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git config:*)"
+    ]
+  }
+}
